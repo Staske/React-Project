@@ -6,28 +6,25 @@ class App extends Component {
     super();
 
     this.state = {
-      players: [
-        {
-          name: "Udonis Haslem",
-          id: "1"
-        },
-        {
-          name: "Kendrick Nunn",
-          id: "2"
-        },
-        {
-          name: "Jimmy Butler",
-          id: "3"
-        }
-      ]
+      players: []
     };
+  }
+
+  componentDidMount() {
+    fetch(
+      "https://cors-anywhere.herokuapp.com/http://data.nba.net/json/cms/noseason/team/heat/roster.json"
+    )
+      .then(response => response.json())
+      .then(data =>
+        this.setState({ players: data.sports_content.roster.players.player })
+      );
   }
 
   render() {
     return (
       <div className="App">
         {this.state.players.map(player => (
-          <h1 key={player.id}> {player.name} </h1>
+          <h1 key={player.person_id}> {player.display_name} </h1>
         ))}
       </div>
     );
