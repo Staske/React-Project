@@ -25,14 +25,19 @@ class App extends Component {
   }
 
   render() {
+    const { players, searchField } = this.state;
+    const filteredPlayers = players.filter(player =>
+      player.last_name.toLowerCase().includes(searchField.toLowerCase())
+    );
+
     return (
       <div className="App">
         <input
           type="search"
-          placeholder="Enter player name"
+          placeholder="Enter player last name"
           onChange={e => this.setState({ searchField: e.target.value })}
         />
-        <CardList players={this.state.players} />
+        <CardList players={filteredPlayers} />
       </div>
     );
   }
